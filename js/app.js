@@ -1,6 +1,6 @@
 // ============================================
 // FIYIT — app.js
-// Main application logic (Stage 1: Foundation)
+// Main application logic (Stage 2: Interactions)
 // ============================================
 
 // --- Get DOM Elements ---
@@ -24,13 +24,32 @@ function sendMessage() {
   // 2. Clear the input
   chatInput.value = '';
 
-  // 3. Show a placeholder AI response (real AI comes in Stage 7)
+  // 3. Get typing indicator element
+  const typingIndicator = document.getElementById('typingIndicator');
+
+  // 4. Show typing indicator right away
+  if (typingIndicator) {
+    typingIndicator.style.display = 'flex';
+    typingIndicator.classList.remove('hidden');
+    // Move indicator to the bottom so it stays under user message
+    chatArea.appendChild(typingIndicator);
+    typingIndicator.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // 5. Wait 1.5 seconds, hide bubbles, then drop AI response
   setTimeout(() => {
+    // Hide the typing bubbles
+    if (typingIndicator) {
+      typingIndicator.style.display = 'none';
+      typingIndicator.classList.add('hidden');
+    }
+
+    // Add the AI response block
     addMessage(
       "📚 I received your question! AI responses will be connected in Stage 7. Keep building! 🚀",
       'ai'
     );
-  }, 600);
+  }, 1500); // Changed to 1500ms (1.5 seconds) so the user sees the animation working!
 }
 
 // ============================================
