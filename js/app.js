@@ -7,6 +7,7 @@
 const chatInput = document.getElementById('chatInput');
 const sendBtn = document.getElementById('sendBtn');
 const chatArea = document.getElementById('chatArea');
+const typingIndicator = document.getElementById('typingIndicator'); // Moved globally to the top
 
 // ============================================
 // SEND MESSAGE FUNCTION
@@ -21,35 +22,28 @@ function sendMessage() {
   // 1. Add user's message to chat
   addMessage(text, 'user');
 
-  // 2. Clear the input
+  // 2. Clear the input field instantly
   chatInput.value = '';
 
-  // 3. Get typing indicator element
-  const typingIndicator = document.getElementById('typingIndicator');
-
-  // 4. Show typing indicator right away
+  // 3. Show typing indicator smoothly by removing 'hidden' class
   if (typingIndicator) {
-    typingIndicator.style.display = 'flex';
     typingIndicator.classList.remove('hidden');
-    // Move indicator to the bottom so it stays under user message
-    chatArea.appendChild(typingIndicator);
     typingIndicator.scrollIntoView({ behavior: 'smooth' });
   }
 
-  // 5. Wait 1.5 seconds, hide bubbles, then drop AI response
+  // 4. Wait 1.5 seconds, hide bubbles, then drop AI response
   setTimeout(() => {
-    // Hide the typing bubbles
+    // Hide the typing bubbles gracefully
     if (typingIndicator) {
-      typingIndicator.style.display = 'none';
       typingIndicator.classList.add('hidden');
     }
 
-    // Add the AI response block
+    // Add the AI response block right where the indicator was sitting
     addMessage(
       "📚 I received your question! AI responses will be connected in Stage 7. Keep building! 🚀",
       'ai'
     );
-  }, 1500); // Changed to 1500ms (1.5 seconds) so the user sees the animation working!
+  }, 1500); // 1.5 seconds delay
 }
 
 // ============================================
@@ -66,9 +60,16 @@ function addMessage(text, sender) {
   bubble.textContent = text;
 
   messageDiv.appendChild(bubble);
-  chatArea.appendChild(messageDiv);
 
-  // Auto-scroll to latest message
+  // OPTIMIZED: Always insert new messages BEFORE the typing indicator.
+  // This completely stops layout jumping and keeps the dots at the bottom.
+  if (typingIndicator) {
+    chatArea.insertBefore(messageDiv, typingIndicator);
+  } else {
+    chatArea.appendChild(messageDiv);
+  }
+
+  // Auto-scroll to the newly dropped message bubble
   messageDiv.scrollIntoView({ behavior: 'smooth' });
 }
 
