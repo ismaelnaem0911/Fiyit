@@ -1,0 +1,300 @@
+/* ============================================
+   FIYIT DESIGN SYSTEM
+   Colors, Typography, Reset, Base Styles
+   ============================================ */
+
+/* --- CSS Variables (Design Tokens) --- */
+:root {
+  /* Brand Colors */
+  --color-primary: #16a34a;       /* Green */
+  --color-primary-light: #bbf7d0;
+  --color-primary-dark: #15803d;
+  --color-secondary: #facc15;     /* Yellow */
+  --color-warning: #ef4444;       /* Red */
+
+  /* Neutral Colors */
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+  --color-border: #e5e7eb;
+  --color-text: #111827;
+  --color-text-muted: #6b7280;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Font */
+  --font-main: 'Inter', sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+
+  /* Layout */
+  --top-bar-height: 60px;
+  --input-bar-height: 68px;
+}
+
+/* --- Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-main);
+}
+
+input {
+  font-family: var(--font-main);
+  border: none;
+  outline: none;
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh; /* dynamic viewport height — better on mobile */
+}
+
+/* --- Top Bar --- */
+.top-bar {
+  height: var(--top-bar-height);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 1px;
+}
+
+.top-bar__actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+/* --- Main Content --- */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md);
+  padding-bottom: calc(var(--input-bar-height) + var(--space-md));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* --- Chat Input Bar --- */
+.chat-input-bar {
+  height: var(--input-bar-height);
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+}
+
+/* ============================================
+   COMPONENTS
+   ============================================ */
+
+/* --- Icon Button --- */
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background-color: var(--color-bg);
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.icon-btn:hover, .icon-btn:active {
+  background-color: var(--color-primary-light);
+}
+
+/* --- Send Button --- */
+.send-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  color: white;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+}
+
+.send-btn:hover, .send-btn:active {
+  background-color: var(--color-primary-dark);
+}
+
+/* --- Chat Input --- */
+.chat-input {
+  flex: 1;
+  height: 44px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0 var(--space-md);
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.chat-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.chat-input:focus {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface);
+}
+
+/* ============================================
+   WELCOME SECTION
+   ============================================ */
+
+.welcome-section {
+  text-align: center;
+  padding: var(--space-lg) 0 var(--space-sm);
+}
+
+.welcome-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.welcome-subtitle {
+  font-size: 15px;
+  color: var(--color-text-muted);
+}
+
+/* ============================================
+   QUICK ACTIONS
+   ============================================ */
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+}
+
+.quick-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all 0.2s;
+}
+
+.quick-action-btn:hover,
+.quick-action-btn:active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.quick-action-icon {
+  font-size: 24px;
+}
+
+.quick-action-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ============================================
+   CHAT AREA
+   ============================================ */
+
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.chat-message {
+  display: flex;
+}
+
+.ai-message {
+  justify-content: flex-start;
+}
+
+.user-message {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 85%;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.ai-message .message-bubble {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.user-message .message-bubble {
+  background-color: var(--color-primary);
+  color: white;
+  border-bottom-right-radius: var(--radius-sm);
+  }
