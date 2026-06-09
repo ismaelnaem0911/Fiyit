@@ -1,48 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIYIT - Books 📚</title>
-    <link rel="stylesheet" href="../css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIYIT - Books 📚</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="../css/main.css">
+  
+  <style>
+    body { background-color: #f9fafb; margin: 0; font-family: 'Inter', sans-serif; color: #1f2937; }
+    .library-container { padding: 1.5rem; max-width: 600px; margin: 0 auto; }
+    .back-btn { display: inline-block; margin-bottom: 1.5rem; color: #16a34a; text-decoration: none; font-weight: 600; font-size: 16px; }
+    .selector-label { font-weight: 600; display: block; margin-bottom: 0.5rem; font-size: 14px; color: #374151; }
+    .custom-select { width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 12px; font-size: 15px; background-color: white; font-family: inherit; margin-bottom: 2rem; }
+    .section-title { font-size: 18px; font-weight: 700; margin: 1.5rem 0 1rem 0; color: #111827; }
+    .book-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .book-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; text-align: center; display: flex; flex-direction: column; align-items: center; transition: transform 0.2s, border-color 0.2s; }
+    .book-card:active { transform: scale(0.98); border-color: #16a34a; }
+    .book-cover { font-size: 36px; margin-bottom: 0.5rem; }
+    .book-title { font-size: 14px; font-weight: 600; color: #111827; }
+    .chapter-list { list-style: none; padding: 0; margin: 0; }
+    .chapter-item { padding: 1rem; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 0.75rem; background: white; display: flex; align-items: center; gap: 0.75rem; font-size: 14px; font-weight: 500; }
+  </style>
 </head>
 <body>
-    <header class="top-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #e5e7eb;">
-        <a href="../index.html" style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #16a34a;">⬅ FIYIT</a>
-        <h2 style="font-size: 1.2rem; margin: 0;">Library 📚</h2>
-        <div style="width: 32px;"></div> </header>
 
-    <main style="padding: 1rem; max-width: 600px; margin: 0 auto;">
-        <section style="margin-bottom: 1.5rem;">
-            <label for="grade" style="font-weight: bold; display: block; margin-bottom: 0.5rem;">Select Your Grade:</label>
-            <select id="grade" style="width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; font-size: 1rem;">
-                <option value="6">Grade 6</option>
-                <option value="7">Grade 7</option>
-                <option value="8">Grade 8</option>
-                <option value="9">Grade 9</option>
-                <option value="10">Grade 10</option>
-                <option value="11">Grade 11</option>
-                <option value="12">Grade 12</option>
-            </select>
-        </section>
+  <div class="library-container">
+    <a href="../index.html" class="back-btn">⬅ Back to Chat</a>
 
-        <h3 style="margin-bottom: 1rem;">Subjects</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-            <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 0.75rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <span style="font-size: 2rem;">📐</span>
-                <h4 style="margin: 0.5rem 0 0 0;">Maths</h4>
-            </div>
-            <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 0.75rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <span style="font-size: 2rem;">🌍</span>
-                <h4 style="margin: 0.5rem 0 0 0;">Geography</h4>
-            </div>
-        </div>
+    <h1 style="font-size: 24px; font-weight: 700; margin: 0 0 0.5rem 0;">Digital Library</h1>
+    <p style="font-size: 14px; color: #6b7280; margin-bottom: 1.5rem;">Access your Ministry of Education curriculum textbooks.</p>
 
-        <h3>Chapters</h3>
-        <ul style="list-style: none; padding: 0;">
-            <li style="padding: 1rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; margin-bottom: 0.5rem; background: #f9fafb;">📖 Unit 1: Introduction</li>
-            <li style="padding: 1rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; margin-bottom: 0.5rem; background: #f9fafb;">📖 Unit 2: Core Concepts</li>
-        </ul>
-    </main>
+    <section>
+      <label for="grade" class="selector-label">Select Your Grade:</label>
+      <select id="grade" class="custom-select">
+        <option value="6">Grade 6</option>
+        <option value="7">Grade 7</option>
+        <option value="8">Grade 8</option>
+        <option value="9">Grade 9</option>
+        <option value="10">Grade 10</option>
+        <option value="11" selected>Grade 11</option>
+        <option value="12">Grade 12</option>
+      </select>
+    </section>
+
+    <h2 class="section-title">Subjects</h2>
+    <div class="book-grid">
+      <div class="book-card">
+        <span class="book-cover">📐</span>
+        <span class="book-title">Mathematics</span>
+      </div>
+      <div class="book-card">
+        <span class="book-cover">🌍</span>
+        <span class="book-title">Geography</span>
+      </div>
+    </div>
+
+    <h2 class="section-title">Chapters</h2>
+    <ul class="chapter-list">
+      <li class="chapter-item">📖 Unit 1: Introduction</li>
+      <li class="chapter-item">📖 Unit 2: Core Concepts</li>
+    </ul>
+  </div>
+
 </body>
 </html>
