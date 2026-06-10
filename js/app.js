@@ -1,59 +1,97 @@
-// ============================================
-// FIYIT — app.js
-// ============================================
+// js/app.js - FIYIT Live Chat & Local Key Storage Manager
 
-const chatInput = document.getElementById('chatInput');
-const sendBtn = document.getElementById('sendBtn');
-const chatArea = document.getElementById('chatArea');
-const typingIndicator = document.getElementById('typingIndicator');
+const MODEL_NAME = "gemini-1.5-flash";
 
-function sendMessage() {
-  const text = chatInput.value.trim();
-  if (!text) return;
+const chatContainer = document.getElementById('chat-container');
+const userInput = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
 
-  addMessage(text, 'user');
-  chatInput.value = '';
+// Create a secure configuration utility on the screen dynamically
+function injectKeyManagerUI() {
+    const existingManager = document.getElementById('key-manager-ui');
+    if (existingManager) return;
 
-  if (typingIndicator) {
-    typingIndicator.classList.remove('hidden');
-    typingIndicator.scrollIntoView({ behavior: 'smooth' });
-  }
+    const managerDiv = document.createElement('div');
+    managerDiv.id = 'key-manager-ui';
+    managerDiv.style = "background: #f1f3f4; padding: 10px; display: flex; gap: 8px; border-bottom: 1px solid #ddd; align-items: center;";
+    
+    const savedKey = localStorage.getItem('fiyit_gemini_key') || "";
+    
+    managerDiv.innerHTML = `
+        <span style="font-size:12px; font-weight:bold; color:#555;">API Setup:</span>
+        <input type="password" id="local-key-input" value="${savedKey}" placeholder="Paste AQ. or AIzaSy key here" style="flex:1; padding:6px; border-radius:4px; border:1px solid #ccc; font-size:12px;">
+        <button id="save-key-btn" style="background:#28a745; color:white; border:none; padding:6px 12px; border-radius:4px; font-size:12px; cursor:pointer;">Save Key</button>
+    `;
+    
+    chatContainer.parentNode.insertBefore(managerDiv, chatContainer);
 
-  setTimeout(() => {
-    if (typingIndicator) {
-      typingIndicator.classList.add('hidden');
+    document.getElementById('save-key-btn').addEventListener('click', () => {
+        const val = document.getElementById('local-key-input').value.trim();
+        localStorage.setItem('fiyit_gemini_key', val);
+        alert("🔒 Key saved locally to your device! Refreshing app...");
+        window.location.reload();
+    });
+}
+
+function appendMessage(sender, text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
+    messageDiv.innerText = text;
+    chatContainer.appendChild(messageDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+async function fetchAIChatResponse(prompt) {
+    const savedKey = localStorage.getItem('fiyit_gemini_key') || "";
+    if (!savedKey) {
+        return "⚠️ Setup Error: Please paste and save your Gemini API Key in the field above first.";
     }
-    addMessage(
-      "📚 I received your question! AI responses will be connected in Stage 7. Keep building! 🚀",
-      'ai'
-    );
-  }, 1500);
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${savedKey}`;
+    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: `You are an AI study assistant for FIYIT platform helping Ethiopian students. Answer this concisely: ${prompt}` }]
+                }]
+            })
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.error?.message || `Error status: ${response.status}`);
+        }
+
+        return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response text found.";
+    } catch (error) {
+        return `⚠️ Live Error: ${error.message}`;
+    }
 }
 
-function addMessage(text, sender) {
-  const messageDiv = document.createElement('div');
-  messageDiv.classList.add('chat-message');
-  messageDiv.classList.add(sender === 'ai' ? 'ai-message' : 'user-message');
+async function handleSendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
 
-  const bubble = document.createElement('div');
-  bubble.classList.add('message-bubble');
-  bubble.textContent = text;
+    appendMessage('user', text);
+    userInput.value = '';
 
-  messageDiv.appendChild(bubble);
+    const loadingDiv = document.createElement('div');
+    loadingDiv.classList.add('message', 'ai-message');
+    loadingDiv.innerText = "Thinking...";
+    chatContainer.appendChild(loadingDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 
-  if (typingIndicator) {
-    chatArea.insertBefore(messageDiv, typingIndicator);
-  } else {
-    chatArea.appendChild(messageDiv);
-  }
-
-  messageDiv.scrollIntoView({ behavior: 'smooth' });
+    const aiResponse = await fetchAIChatResponse(text);
+    loadingDiv.remove();
+    appendMessage('ai', aiResponse);
 }
 
-sendBtn.addEventListener('click', sendMessage);
-
-chatInput.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') {
-    sendMessage();
-  }
+// Start configurations on load
+injectKeyManagerUI();
+sendBtn.addEventListener('click', handleSendMessage);
+userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleSendMessage();
 });
