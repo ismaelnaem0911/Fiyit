@@ -64,10 +64,6 @@
 
     /* LESSON PAGE */
     .lesson-page { background: white; border-radius: 16px; border: 1px solid #e5e7eb; padding: 1.5rem; }
-    .lesson-coming { text-align: center; padding: 3rem 1rem; }
-    .lesson-coming-icon { font-size: 64px; display: block; margin-bottom: 1rem; }
-    .lesson-coming-title { font-size: 20px; font-weight: 700; margin-bottom: 0.5rem; }
-    .lesson-coming-text { font-size: 14px; color: #6b7280; line-height: 1.6; }
 
     /* HIDDEN */
     .screen { display: none; }
@@ -77,10 +73,8 @@
 <body>
   <div class="library-container">
 
-    <!-- BACK BUTTON -->
     <a href="../index.html" class="back-btn" id="backBtn">⬅ Back to Chat</a>
 
-    <!-- STEP INDICATOR -->
     <div class="step-indicator" id="stepIndicator">
       <span class="step-chip active" id="step1Chip">📚 Grade</span>
       <span class="step-arrow">›</span>
@@ -91,7 +85,6 @@
       <span class="step-chip" id="step4Chip">📝 Units</span>
     </div>
 
-    <!-- SCREEN 1: GRADE SELECTION -->
     <div class="screen active" id="screen1">
       <h1 class="page-title">Digital Library 📚</h1>
       <p class="page-subtitle">Select your grade to get started.</p>
@@ -107,7 +100,6 @@
       </div>
     </div>
 
-    <!-- SCREEN 2A: REGION SELECTION (Grade 6-10) -->
     <div class="screen" id="screen2region">
       <h1 class="page-title" id="regionTitle">Grade 6 — Select Region</h1>
       <p class="page-subtitle">Books depend on your region.</p>
@@ -125,7 +117,6 @@
       </div>
     </div>
 
-    <!-- SCREEN 2B: STREAM SELECTION (Grade 11-12) -->
     <div class="screen" id="screen2stream">
       <h1 class="page-title" id="streamTitle">Grade 11 — Select Stream</h1>
       <p class="page-subtitle">Choose your academic stream.</p>
@@ -143,7 +134,6 @@
       </div>
     </div>
 
-    <!-- SCREEN 3: SUBJECT SELECTION -->
     <div class="screen" id="screen3">
       <h1 class="page-title" id="subjectTitle">Choose a Subject</h1>
       <p class="page-subtitle" id="subjectSubtitle"></p>
@@ -151,7 +141,6 @@
       <div class="subject-grid" id="subjectGrid"></div>
     </div>
 
-    <!-- SCREEN 4: UNIT LIST -->
     <div class="screen" id="screen4">
       <h1 class="page-title" id="unitTitle">Units</h1>
       <p class="page-subtitle" id="unitSubtitle"></p>
@@ -159,14 +148,19 @@
       <div class="unit-list" id="unitList"></div>
     </div>
 
-    <!-- SCREEN 5: LESSON PAGE -->
     <div class="screen" id="screen5">
-      <div class="lesson-page">
-        <div class="lesson-coming">
-          <span class="lesson-coming-icon">📖</span>
-          <div class="lesson-coming-title" id="lessonTitle">Coming Soon!</div>
-          <p class="lesson-coming-text">This lesson content is being prepared by the FIYIT team. Check back soon — it will be available for free! 🚀</p>
+      <div class="lesson-page" style="background: white; border-radius: 16px; border: 1px solid #e5e7eb; padding: 1.5rem;">
+        <h2 id="lessonTitle" style="font-size: 20px; font-weight: 700; margin-bottom: 0.25rem; color: #111827;"></h2>
+        <p id="lessonSubtitle" style="font-size: 13px; color: #6b7280; margin-bottom: 1rem;"></p>
+        
+        <div id="lessonLoading" style="text-align: center; padding: 3rem 1rem;">
+          <span style="font-size: 40px; display: block; margin-bottom: 1rem;">📖</span>
+          <div style="font-weight: 600; font-size: 16px; color: #111827;">FIYIT AI is preparing your notes...</div>
+          <p style="font-size: 13px; color: #6b7280; margin-top: 0.25rem;">Reading curriculum data and writing study guide...</p>
         </div>
+
+        <div id="lessonContent" style="font-size: 15px; line-height: 1.7; color: #374151; white-space: pre-line; display: none;">
+          </div>
       </div>
     </div>
 
@@ -174,4 +168,4 @@
 
   <script src="../js/books.js"></script>
 </body>
-  </html>
+</html>
