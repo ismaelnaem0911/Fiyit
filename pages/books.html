@@ -3,59 +3,175 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FIYIT - Books 📚</title>
+  <title>FIYIT - Digital Library 📚</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/main.css">
   <style>
     body { background-color: #f9fafb; margin: 0; font-family: 'Inter', sans-serif; color: #1f2937; }
-    .library-container { padding: 1.5rem; max-width: 600px; margin: 0 auto; }
-    .back-btn { display: inline-block; margin-bottom: 1.5rem; color: #16a34a; text-decoration: none; font-weight: 600; font-size: 16px; }
-    .selector-label { font-weight: 600; display: block; margin-bottom: 0.5rem; font-size: 14px; color: #374151; }
-    .custom-select { width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 12px; font-size: 15px; background-color: white; font-family: inherit; margin-bottom: 2rem; }
-    .section-title { font-size: 18px; font-weight: 700; margin: 1.5rem 0 1rem 0; color: #111827; }
-    .book-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
-    .book-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; text-align: center; display: flex; flex-direction: column; align-items: center; transition: transform 0.2s, border-color 0.2s; cursor: pointer; }
-    .book-card:active { transform: scale(0.98); border-color: #16a34a; }
-    .book-cover { font-size: 36px; margin-bottom: 0.5rem; }
-    .book-title { font-size: 14px; font-weight: 600; color: #111827; }
-    .chapter-list { list-style: none; padding: 0; margin: 0; }
-    .chapter-item { padding: 1rem; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 0.75rem; background: white; display: flex; align-items: center; gap: 0.75rem; font-size: 14px; font-weight: 500; }
+    .library-container { padding: 1.5rem; max-width: 600px; margin: 0 auto; padding-bottom: 3rem; }
+    .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; color: #16a34a; text-decoration: none; font-weight: 600; font-size: 15px; }
+    .page-title { font-size: 24px; font-weight: 700; margin: 0 0 0.25rem 0; }
+    .page-subtitle { font-size: 14px; color: #6b7280; margin: 0 0 1.5rem 0; }
+
+    /* STEP INDICATOR */
+    .step-indicator { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; overflow-x: auto; padding-bottom: 0.25rem; }
+    .step-chip { display: inline-flex; align-items: center; gap: 0.25rem; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 20px; padding: 0.35rem 0.75rem; font-size: 12px; font-weight: 600; color: #6b7280; white-space: nowrap; cursor: pointer; }
+    .step-chip.active { background: #16a34a; border-color: #16a34a; color: white; }
+    .step-chip.done { background: #dcfce7; border-color: #16a34a; color: #15803d; }
+    .step-arrow { color: #d1d5db; font-size: 12px; flex-shrink: 0; }
+
+    /* SECTION LABEL */
+    .section-label { font-size: 13px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem; }
+
+    /* GRADE GRID */
+    .grade-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+    .grade-btn { background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 1rem 0.5rem; text-align: center; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+    .grade-btn:active, .grade-btn.selected { border-color: #16a34a; background: #f0fdf4; }
+    .grade-number { font-size: 20px; font-weight: 700; color: #16a34a; display: block; }
+    .grade-label { font-size: 11px; color: #6b7280; font-weight: 600; }
+
+    /* OPTION CARDS (Region / Stream) */
+    .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    .option-card { background: white; border: 2px solid #e5e7eb; border-radius: 16px; padding: 1.5rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .option-card:active { border-color: #16a34a; background: #f0fdf4; transform: scale(0.98); }
+    .option-icon { font-size: 36px; display: block; margin-bottom: 0.5rem; }
+    .option-title { font-size: 15px; font-weight: 700; color: #111827; }
+    .option-desc { font-size: 12px; color: #6b7280; margin-top: 0.25rem; }
+
+    /* SUBJECT GRID */
+    .subject-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+    .subject-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; transition: all 0.2s; }
+    .subject-card:active { border-color: #16a34a; background: #f0fdf4; }
+    .subject-icon { font-size: 28px; flex-shrink: 0; }
+    .subject-name { font-size: 13px; font-weight: 600; color: #111827; }
+    .subject-units { font-size: 11px; color: #6b7280; margin-top: 2px; }
+
+    /* UNIT LIST */
+    .unit-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .unit-item { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 1rem; cursor: pointer; transition: all 0.2s; }
+    .unit-item:active { border-color: #16a34a; background: #f0fdf4; }
+    .unit-number { width: 32px; height: 32px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #16a34a; flex-shrink: 0; }
+    .unit-number.coming { background: #f9fafb; border-color: #e5e7eb; color: #9ca3af; }
+    .unit-info { flex: 1; }
+    .unit-name { font-size: 14px; font-weight: 600; color: #111827; }
+    .unit-status { font-size: 11px; color: #6b7280; margin-top: 2px; }
+    .unit-arrow { color: #9ca3af; font-size: 16px; }
+
+    /* COMING SOON BADGE */
+    .coming-soon-badge { display: inline-block; background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-left: 0.5rem; }
+
+    /* LESSON PAGE */
+    .lesson-page { background: white; border-radius: 16px; border: 1px solid #e5e7eb; padding: 1.5rem; }
+    .lesson-coming { text-align: center; padding: 3rem 1rem; }
+    .lesson-coming-icon { font-size: 64px; display: block; margin-bottom: 1rem; }
+    .lesson-coming-title { font-size: 20px; font-weight: 700; margin-bottom: 0.5rem; }
+    .lesson-coming-text { font-size: 14px; color: #6b7280; line-height: 1.6; }
+
+    /* HIDDEN */
+    .screen { display: none; }
+    .screen.active { display: block; }
   </style>
 </head>
 <body>
   <div class="library-container">
-    <a href="../index.html" class="back-btn">⬅ Back to Chat</a>
-    <h1 style="font-size: 24px; font-weight: 700; margin: 0 0 0.5rem 0;">Digital Library</h1>
-    <p style="font-size: 14px; color: #6b7280; margin-bottom: 1.5rem;">Access your Ministry of Education curriculum textbooks.</p>
-    <section>
-      <label for="grade" class="selector-label">Select Your Grade:</label>
-      <select id="grade" class="custom-select">
-        <option value="6">Grade 6</option>
-        <option value="7">Grade 7</option>
-        <option value="8">Grade 8</option>
-        <option value="9">Grade 9</option>
-        <option value="10">Grade 10</option>
-        <option value="11" selected>Grade 11</option>
-        <option value="12">Grade 12</option>
-      </select>
-    </section>
-    <h2 class="section-title">Subjects</h2>
-    <div class="book-grid">
-      <div class="book-card"><span class="book-cover">📐</span><span class="book-title">Mathematics</span></div>
-      <div class="book-card"><span class="book-cover">🧪</span><span class="book-title">Chemistry</span></div>
-      <div class="book-card"><span class="book-cover">🌱</span><span class="book-title">Biology</span></div>
-      <div class="book-card"><span class="book-cover">⚡</span><span class="book-title">Physics</span></div>
-      <div class="book-card"><span class="book-cover">🌍</span><span class="book-title">Geography</span></div>
-      <div class="book-card"><span class="book-cover">📜</span><span class="book-title">History</span></div>
+
+    <!-- BACK BUTTON -->
+    <a href="../index.html" class="back-btn" id="backBtn">⬅ Back to Chat</a>
+
+    <!-- STEP INDICATOR -->
+    <div class="step-indicator" id="stepIndicator">
+      <span class="step-chip active" id="step1Chip">📚 Grade</span>
+      <span class="step-arrow">›</span>
+      <span class="step-chip" id="step2Chip">📍 Region</span>
+      <span class="step-arrow">›</span>
+      <span class="step-chip" id="step3Chip">📖 Subject</span>
+      <span class="step-arrow">›</span>
+      <span class="step-chip" id="step4Chip">📝 Units</span>
     </div>
-    <h2 class="section-title">Chapters</h2>
-    <ul class="chapter-list">
-      <li class="chapter-item">📖 Unit 1: Introduction</li>
-      <li class="chapter-item">📖 Unit 2: Core Concepts</li>
-      <li class="chapter-item">📖 Unit 3: Advanced Topics</li>
-    </ul>
+
+    <!-- SCREEN 1: GRADE SELECTION -->
+    <div class="screen active" id="screen1">
+      <h1 class="page-title">Digital Library 📚</h1>
+      <p class="page-subtitle">Select your grade to get started.</p>
+      <div class="section-label">Choose Your Grade</div>
+      <div class="grade-grid">
+        <button class="grade-btn" onclick="selectGrade(6)"><span class="grade-number">6</span><span class="grade-label">Grade</span></button>
+        <button class="grade-btn" onclick="selectGrade(7)"><span class="grade-number">7</span><span class="grade-label">Grade</span></button>
+        <button class="grade-btn" onclick="selectGrade(8)"><span class="grade-number">8</span><span class="grade-label">Grade</span></button>
+        <button class="grade-btn" onclick="selectGrade(9)"><span class="grade-number">9</span><span class="grade-label">Grade</span></button>
+        <button class="grade-btn" onclick="selectGrade(10)"><span class="grade-number">10</span><span class="grade-label">Grade</span></button>
+        <button class="grade-btn" onclick="selectGrade(11)"><span class="grade-number">11</span><span class="grade-label">Grade</span></button>
+        <button class="grade-btn" onclick="selectGrade(12)"><span class="grade-number">12</span><span class="grade-label">Grade</span></button>
+      </div>
+    </div>
+
+    <!-- SCREEN 2A: REGION SELECTION (Grade 6-10) -->
+    <div class="screen" id="screen2region">
+      <h1 class="page-title" id="regionTitle">Grade 6 — Select Region</h1>
+      <p class="page-subtitle">Books depend on your region.</p>
+      <div class="option-grid">
+        <div class="option-card" onclick="selectRegion('oromia')">
+          <span class="option-icon">🟢</span>
+          <div class="option-title">Oromia</div>
+          <div class="option-desc">Afaan Oromo books</div>
+        </div>
+        <div class="option-card" onclick="selectRegion('amhara')">
+          <span class="option-icon">🔵</span>
+          <div class="option-title">Amhara</div>
+          <div class="option-desc">Amharic books</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 2B: STREAM SELECTION (Grade 11-12) -->
+    <div class="screen" id="screen2stream">
+      <h1 class="page-title" id="streamTitle">Grade 11 — Select Stream</h1>
+      <p class="page-subtitle">Choose your academic stream.</p>
+      <div class="option-grid">
+        <div class="option-card" onclick="selectStream('natural')">
+          <span class="option-icon">🔬</span>
+          <div class="option-title">Natural Science</div>
+          <div class="option-desc">Biology, Chemistry, Physics, Math</div>
+        </div>
+        <div class="option-card" onclick="selectStream('social')">
+          <span class="option-icon">🌍</span>
+          <div class="option-title">Social Science</div>
+          <div class="option-desc">History, Geography, Economics</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: SUBJECT SELECTION -->
+    <div class="screen" id="screen3">
+      <h1 class="page-title" id="subjectTitle">Choose a Subject</h1>
+      <p class="page-subtitle" id="subjectSubtitle"></p>
+      <div class="section-label">Your Books</div>
+      <div class="subject-grid" id="subjectGrid"></div>
+    </div>
+
+    <!-- SCREEN 4: UNIT LIST -->
+    <div class="screen" id="screen4">
+      <h1 class="page-title" id="unitTitle">Units</h1>
+      <p class="page-subtitle" id="unitSubtitle"></p>
+      <div class="section-label">Chapters</div>
+      <div class="unit-list" id="unitList"></div>
+    </div>
+
+    <!-- SCREEN 5: LESSON PAGE -->
+    <div class="screen" id="screen5">
+      <div class="lesson-page">
+        <div class="lesson-coming">
+          <span class="lesson-coming-icon">📖</span>
+          <div class="lesson-coming-title" id="lessonTitle">Coming Soon!</div>
+          <p class="lesson-coming-text">This lesson content is being prepared by the FIYIT team. Check back soon — it will be available for free! 🚀</p>
+        </div>
+      </div>
+    </div>
+
   </div>
+
+  <script src="../js/books.js"></script>
 </body>
-</html>
+  </html>
