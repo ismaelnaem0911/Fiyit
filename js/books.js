@@ -348,6 +348,17 @@ async function openUnit(unitName, isComingSoon) {
     });
 
     const data = await response.json();
+
+    // Check if the server returned an explicit error response status
+    if (!response.ok) {
+      throw new Error(data.error?.message || `HTTP Server Error ${response.status}`);
+    }
+
+    // Check if format from API has data blocks
+    if (!data.candidates || !data.candidates[0]) {
+      throw new Error("Gemini returned a blank response structure.");
+    }
+
     const aiText = data.candidates[0].content.parts[0].text;
 
     // Switch states and show the data
@@ -359,6 +370,14 @@ async function openUnit(unitName, isComingSoon) {
     console.error("Gemini Error:", error);
     document.getElementById('lessonLoading').style.display = 'none';
     document.getElementById('lessonContent').style.display = 'block';
-    document.getElementById('lessonContent').textContent = "⚠️ Failed to load lesson notes. Please check your internet connection or API Key setup and try again, bro!";
+    
+    // EXPLICIT DEBUGGING: Show the real error directly inside the UI panel
+    document.getElementById('lessonContent').innerHTML = `
+      <div style="background: #fef2f2; border: 1px solid #fca5a5; border-radius: 8px; padding: 1rem; color: #991b1b;">
+        <b style="font-size: 15px; display: block; margin-bottom: 0.5rem;">⚠️ Connection Error Details:</b>
+        <code style="font-family: monospace; font-size: 13px; word-break: break-all; display: block; margin-bottom: 1rem;">${error.message}</code>
+        <p style="font-size: 13px; margin: 0; color: #7f1d1d;">Please ensure your network is connected and your Google AI Studio API Key string format is completely correct.</p>
+      </div>
+    `;
   }
 }
