@@ -1,6 +1,6 @@
 // ============================================
 // FIYIT — books.js
-// Digital Library System
+// Digital Library System & Gemini Notes Integration
 // ============================================
 
 // ============================================
@@ -297,11 +297,68 @@ function selectSubject(name, data) {
 }
 
 // ============================================
-// STEP 5: OPEN UNIT / LESSON
+// STEP 5: OPEN UNIT / AI GENERATE LESSON
 // ============================================
 
-function openUnit(unitName, isComingSoon) {
-  document.getElementById('lessonTitle').textContent = isComingSoon ? 'Coming Soon! 📚' : unitName;
+async function openUnit(unitName, isComingSoon) {
+  const currentGrade = state.grade;
+  const currentSubject = state.subject;
+  
+  // Set up titles
+  document.getElementById('lessonTitle').textContent = unitName;
+  document.getElementById('lessonSubtitle').textContent = `Grade ${currentGrade} · ${currentSubject}`;
+  
+  // Toggle Visibility to Loading State
+  document.getElementById('lessonLoading').style.display = 'block';
+  document.getElementById('lessonContent').style.display = 'none';
+  document.getElementById('lessonContent').textContent = '';
+  
   showScreen('screen5');
   updateBackBtn('screen5');
-                                              }
+
+  // If it's a hard placeholder, give a quick message
+  if (isComingSoon) {
+    document.getElementById('lessonLoading').style.display = 'none';
+    document.getElementById('lessonContent').style.display = 'block';
+    document.getElementById('lessonContent').innerHTML = `<b>Coming Soon!</b>\n\nOur team is currently mapping the curriculum data for this specific track. Stay tuned!`;
+    return;
+  }
+
+  // Call the free Gemini Flash API
+  try {
+    const API_KEY = 'AQ.Ab8RN6IbfAEPT3m51t2_4Jddng2eKalC_fRYbNEl_626pdA_nw'; 
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    
+    // Create a precise prompt acting as an Ethiopian teacher
+    const promptText = `You are an expert school teacher specializing in the national curriculum of Ethiopia. 
+    Write an easy-to-understand, concise study guide for an Ethiopian student in Grade ${currentGrade} studying the subject "${currentSubject}".
+    The lesson chapter topic is: "${unitName}".
+    
+    Structure your response clearly with these sections:
+    1. 🎯 Summary of Key Concepts (Explain it simply so a student understands instantly).
+    2. 💡 Clear Examples (Provide 2 or 3 practical examples relevant to real life).
+    3. 🧠 Quick Quiz (Include 2 simple multiple-choice review questions to test their knowledge, and write the answers down at the very bottom).`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: promptText }] }]
+      })
+    });
+
+    const data = await response.json();
+    const aiText = data.candidates[0].content.parts[0].text;
+
+    // Switch states and show the data
+    document.getElementById('lessonLoading').style.display = 'none';
+    document.getElementById('lessonContent').style.display = 'block';
+    document.getElementById('lessonContent').textContent = aiText;
+
+  } catch (error) {
+    console.error("Gemini Error:", error);
+    document.getElementById('lessonLoading').style.display = 'none';
+    document.getElementById('lessonContent').style.display = 'block';
+    document.getElementById('lessonContent').textContent = "⚠️ Failed to load lesson notes. Please check your internet connection or API Key setup and try again, bro!";
+  }
+}
