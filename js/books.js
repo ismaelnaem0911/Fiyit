@@ -25,6 +25,10 @@ const curriculum = {
     }
 };
 
+const iconCap = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 8px;"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72l5 2.73 5-2.73v3.72z"/></svg>`;
+const iconBooks = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 8px;"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>`;
+const iconDoc = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color: var(--gemini-blue); margin-right: 12px; flex-shrink: 0;"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>`;
+
 // 1. Render the Grade Selection Screen
 function renderBooksHome() {
     appRoot.innerHTML = `
@@ -32,7 +36,7 @@ function renderBooksHome() {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
             Back to Home
         </div>
-        <div class="welcome-text">Select Grade 🎓</div>
+        <div class="welcome-text">${iconCap}Select Grade</div>
         <div class="nav-grid">
             <div class="card card-books" onclick="selectGrade(9)">
                 <div class="card-badge" style="font-size: 24px; font-weight: 800;">9</div>
@@ -61,11 +65,10 @@ function selectGrade(grade) {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
             Back to Grades
         </div>
-        <div class="welcome-text">Grade ${grade} Subjects 📚</div>
+        <div class="welcome-text">${iconBooks}Grade ${grade} Subjects</div>
         <div class="nav-grid">
     `;
     
-    // Dynamically assign card colors so it looks premium
     const styles = ['card-books', 'card-quiz', 'card-progress', 'card-plan'];
     
     Object.keys(curriculum[grade]).forEach((subject, index) => {
@@ -88,15 +91,15 @@ function selectSubject(grade, subject) {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
             Back to Subjects
         </div>
-        <div class="welcome-text">${subject} (G${grade}) 📖</div>
+        <div class="welcome-text">${iconBooks}${subject} (G${grade})</div>
         <div class="nav-grid" style="grid-template-columns: 1fr; gap: 12px;">
     `;
     
     curriculum[grade][subject].forEach(unit => {
         html += `
             <div class="card card-books" style="flex-direction: row; justify-content: flex-start; padding: 20px 15px;" onclick="alert('Opening ${unit}...')">
-                <span style="color: var(--gemini-blue); margin-right: 10px; font-size: 20px;">📄</span> 
-                <span>${unit}</span>
+                ${iconDoc}
+                <span style="text-align: left;">${unit}</span>
             </div>
         `;
     });
