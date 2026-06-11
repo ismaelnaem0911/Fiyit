@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIYIT 2.0 - Fluid Design</title>
+    <title>FIYIT 2.0</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="dark-theme">
+<body>
 
     <div class="fluid-overlay"></div>
     <div class="rainbow-glow"></div>
@@ -28,20 +28,7 @@
         <div class="top-icons right">👤</div>
     </header>
 
-    <main class="app-view">
-        <h1 class="welcome-text">Welcome, User! 👋</h1>
-
-        <div class="nav-grid">
-            <div class="card card-books" onclick="selectCard('books')">📚 My Books</div>
-            <div class="card card-quiz" onclick="selectCard('quiz')">📝 Quizzes</div>
-            <div class="card card-plan" onclick="selectCard('plan')">📅 My Plan</div>
-            <div class="card card-progress" onclick="selectCard('progress')">📈 Progress</div>
-        </div>
-
-        <div id="content-container">
-            </div>
-
-    </main>
+    <main id="app-root"></main>
 
     <footer class="bottom-bar">
         <div class="fluid-wave magenta"></div>
