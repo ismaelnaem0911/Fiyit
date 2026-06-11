@@ -17,16 +17,15 @@ function renderBooksHome() {
 
 function selectGrade(grade) {
     if (grade === 11 || grade === 12) {
-        // Ask for stream first
         appRoot.innerHTML = `
             <div class="header-section"><h2>Select Stream (Grade ${grade})</h2></div>
             <div class="nav-grid">
                 <div class="card" onclick="renderSubjects(${grade}, 'Natural')"><span>Natural Sciences</span></div>
                 <div class="card" onclick="renderSubjects(${grade}, 'Social')"><span>Social Sciences</span></div>
             </div>
+            <button class="back-btn" onclick="renderBooksHome()">Back</button>
         `;
     } else {
-        // Go straight to subjects for 9 and 10
         renderSubjects(grade, null);
     }
 }
@@ -34,7 +33,6 @@ function selectGrade(grade) {
 function renderSubjects(grade, stream) {
     let subjects = [];
     if (stream) {
-        // Combine Common + Stream specific
         const common = NationalCurriculum[grade].Common;
         const streamData = NationalCurriculum[grade][stream];
         subjects = [...Object.keys(common), ...Object.keys(streamData)];
@@ -43,14 +41,50 @@ function renderSubjects(grade, stream) {
     }
 
     appRoot.innerHTML = `
-        <div class="header-section"><h2>Subjects - Grade ${grade} ${stream ? '(' + stream + ')' : ''}</h2></div>
+        <div class="header-section"><h2>Subjects</h2></div>
         <div class="nav-grid">
             ${subjects.map(sub => `
-                <div class="card" onclick="alert('Opening ${sub}...')">
+                <div class="card" onclick="renderUnits('${sub}', ${grade}, '${stream || 'null'}')">
                     <span>${sub}</span>
                 </div>
             `).join('')}
         </div>
         <button class="back-btn" onclick="renderBooksHome()">Back</button>
     `;
+}
+
+function renderUnits(subject, grade, stream) {
+    // Logic to find the unit list based on grade/stream/subject
+    const data = (stream !== 'null') ? 
+                 (NationalCurriculum[grade].Common[subject] || NationalCurriculum[grade][stream][subject]) : 
+                 NationalCurriculum[grade][subject];
+
+    appRoot.innerHTML = `
+        <div class="header-section"><h2>${subject} Units</h2></div>
+        <div class="nav-grid">
+            ${data.map(unit => `
+                <div class="card" onclick="renderUnitContent('${unit}')">
+                    <span>${unit}</span>
+                </div>
+            `).join('')}
+        </div>
+        <button class="back-btn" onclick="renderSubjects(${grade}, ${stream !== 'null' ? `'${stream}'` : null})">Back</button>
+    `;
+}
+
+function renderUnitContent(unitName) {
+    // This is the Reading View
+    appRoot.innerHTML = `
+        <div class="header-section"><h2>${unitName}</h2></div>
+        <div class="content-box" style="padding:20px; color:white;">
+            <p>Here is the content for ${unitName}... (AI will generate this later).</p>
+        </div>
+        <button class="start-quiz-btn" onclick="startQuizFromUnit('${unitName}')">Start Quiz</button>
+    `;
+}
+
+function startQuizFromUnit(unitName) {
+    // Save the unit so the quiz engine knows what to generate
+    localStorage.setItem('activeUnit', unitName);
+    setView('quiz');
 }
