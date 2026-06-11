@@ -3,63 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiyit 2.0</title>
+    <title>FIYIT 2.0 | National Curriculum</title>
+    <!-- CSS must load first -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <!-- Gemini Shifting Background Aura -->
+    <!-- UI Backgrounds -->
     <div class="gemini-bg-fluid"></div>
     <div class="gemini-aurora-top"></div>
 
-    <!-- Fixed App Header -->
+    <!-- Top Navigation -->
     <header class="top-bar">
-        <button class="top-icon-btn">⚙️</button>
+        <button class="top-icon-btn" onclick="setView('home')">🏠</button>
         <div class="logo-area">
-            <div id="fluid-logo" class="logo-fiyit">
-                <span class="letter-f">F</span>
-                <span class="letter-i">i</span>
-                <span class="letter-y">y</span>
-                <span class="letter-i">i</span>
-                <span class="letter-t">t</span>
-            </div>
+            <div id="fluid-logo" class="logo-fiyit">FIYIT</div>
         </div>
         <button class="top-icon-btn">👤</button>
     </header>
 
-    <!-- Master Container for Grid + Dynamic Views -->
-    <main id="app-root">
-        <!-- Dashboard Content & Dynamic Sub-screens Load Here via JavaScript -->
-    </main>
+    <!-- Main Dynamic Content Area -->
+    <main id="app-root"></main>
 
-    <!-- Permanent Split-Screen AI Chat Panel (Bottom Area) -->
+    <!-- AI Chat Panel -->
     <section class="ai-chat-panel">
-        <!-- Rolling Conversation Feed Container -->
         <div id="chat-stream" class="chat-stream-area">
-            <div class="chat-bubble ai-msg">Hello, how can I help you study today? (...)</div>
+            <div class="chat-bubble ai-msg">Ready to learn? Select a grade!</div>
         </div>
-
-        <!-- Gemini Voice/Text Input Dashboard Control Bar -->
         <div class="chat-input-wrapper">
-            <button class="input-action-btn voice-btn" id="mic-trigger">🎤</button>
-            <input type="text" id="user-chat-input" class="chat-input-field" placeholder="Type message..." autocomplete="off">
-            <button class="input-action-btn attach-btn" id="file-trigger">📎</button>
+            <button class="input-action-btn" id="mic-trigger">🎤</button>
+            <input type="text" id="user-chat-input" class="chat-input-field" placeholder="Ask AI..." autocomplete="off">
             <button class="send-message-btn" id="send-trigger">
-                <svg viewBox="0 0 24 24" class="send-icon"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/></svg>
             </button>
         </div>
     </section>
 
-    <!-- Gemini Liquid Animated Wave Base Layer -->
+    <!-- Bottom Wave -->
     <footer class="bottom-wave-container">
         <div class="wave layer-magenta"></div>
         <div class="wave layer-cyan"></div>
         <div class="wave layer-gold"></div>
     </footer>
 
-    <!-- Master Application Code Scripts -->
+    <!-- LOGIC LOAD ORDER (DO NOT CHANGE) -->
+    <!-- 1. The Database -->
+    <script src="js/data.js"></script>
+    <!-- 2. The Controller -->
     <script src="js/app.js"></script>
+    <!-- 3. The Feature Modules -->
     <script src="js/books.js"></script>
     <script src="js/modules.js"></script>
+    <script src="js/quiz.js"></script>
+
 </body>
 </html>
