@@ -3,40 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIYIT 2.0</title>
+    <title>Fiyit 2.0</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <div class="fluid-overlay"></div>
+    <!-- Gemini Shifting Background Aura -->
+    <div class="gemini-bg-fluid"></div>
+    <div class="gemini-aurora-top"></div>
 
+    <!-- Fixed App Header -->
     <header class="top-bar">
-        <div class="top-icons left">⚙️</div>
-        
+        <button class="top-icon-btn">⚙️</button>
         <div class="logo-area">
             <div id="fluid-logo" class="logo-fiyit">
-                <span class="logo-f">F</span>
-                <span class="logo-i">i</span>
-                <span class="logo-y">y</span>
-                <span class="logo-i">i</span>
-                <span class="logo-t">t</span>
+                <span class="letter-f">F</span>
+                <span class="letter-i">i</span>
+                <span class="letter-y">y</span>
+                <span class="letter-i">i</span>
+                <span class="letter-t">t</span>
             </div>
-            <div class="logo-glow"></div>
         </div>
-
-        <div class="top-icons right">👤</div>
+        <button class="top-icon-btn">👤</button>
     </header>
 
+    <!-- Master Container for Grid + Dynamic Views -->
     <main id="app-root">
-        </main>
+        <!-- Dashboard Content & Dynamic Sub-screens Load Here via JavaScript -->
+    </main>
 
-    <footer class="bottom-bar">
-        <div class="fluid-wave magenta"></div>
-        <div class="fluid-wave ruby"></div>
-        <div class="fluid-wave gold"></div>
-        <button class="icon-chat" onclick="alert('Chat Open')">💬</button>
+    <!-- Permanent Split-Screen AI Chat Panel (Bottom Area) -->
+    <section class="ai-chat-panel">
+        <!-- Rolling Conversation Feed Container -->
+        <div id="chat-stream" class="chat-stream-area">
+            <div class="chat-bubble ai-msg">Hello, how can I help you study today? (...)</div>
+        </div>
+
+        <!-- Gemini Voice/Text Input Dashboard Control Bar -->
+        <div class="chat-input-wrapper">
+            <button class="input-action-btn voice-btn" id="mic-trigger">🎤</button>
+            <input type="text" id="user-chat-input" class="chat-input-field" placeholder="Type message..." autocomplete="off">
+            <button class="input-action-btn attach-btn" id="file-trigger">📎</button>
+            <button class="send-message-btn" id="send-trigger">
+                <svg viewBox="0 0 24 24" class="send-icon"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/></svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Gemini Liquid Animated Wave Base Layer -->
+    <footer class="bottom-wave-container">
+        <div class="wave layer-magenta"></div>
+        <div class="wave layer-cyan"></div>
+        <div class="wave layer-gold"></div>
     </footer>
 
+    <!-- Master Application Code Scripts -->
     <script src="js/app.js"></script>
+    <script src="js/books.js"></script>
+    <script src="js/modules.js"></script>
 </body>
 </html>
