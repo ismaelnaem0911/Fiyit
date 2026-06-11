@@ -3,28 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIYIT</title>
+    <title>FIYIT | Premium</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="aurora-top"></div>
+
     <header class="top-bar">
-        <button class="nav-btn" onclick="setView('home')">🏠</button>
-        <div class="logo">FIYIT</div>
-        <button class="nav-btn">👤</button>
+        <button class="nav-btn" onclick="alert('Settings')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+        
+        <h1 class="logo-fiyit">Fiyit</h1>
+        
+        <button class="nav-btn profile-btn">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"/></svg>
+            <span class="status-dot"></span>
+        </button>
     </header>
 
     <main id="app-root"></main>
 
     <section class="chat-panel">
         <div id="chat-stream" class="chat-stream">
-            <div class="msg ai">Ready to learn? Select a grade!</div>
+            <div class="msg ai">Hello, how can I help you study?</div>
         </div>
         <div class="input-container">
-            <button class="action-btn" onclick="alert('Media sharing coming soon')">+</button>
-            <input type="text" id="user-chat-input" placeholder="Ask AI...">
-            <button class="action-btn" id="send-trigger">➤</button>
+            <button class="icon-action-btn" id="mic-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            </button>
+            <input type="text" id="user-chat-input" placeholder="Type message...">
+            <button class="send-trigger" id="send-trigger">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+            </button>
         </div>
     </section>
+
+    <div class="bottom-waves"></div>
 
     <script src="js/data.js"></script>
     <script src="js/app.js"></script>
