@@ -1,0 +1,90 @@
+/* FIYIT 2.0 - Fluid Design System */
+
+:root {
+    --bg-black: #000000;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --text-white: #ffffff;
+    /* Neon Accents */
+    --neon-blue: #00f7ff;
+    --neon-green: #00ff88;
+    --neon-purple: #bd00ff;
+    --neon-gold: #ffea00;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 1. Fluid Background Animation */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 50% 50%, #ff00ff15, #0000ff15, #000000);
+    animation: flow 20s ease infinite;
+    z-index: -1;
+}
+
+@keyframes flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 2. Fluid Logo Styles */
+.logo-container {
+    padding: 20px;
+    text-align: center;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+    animation: pulse 3s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* 3. The Grid Cards */
+.nav-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 20px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+/* Adding the Glow to cards */
+.card-books { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 247, 255, 0.2); }
+.card-quiz { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(0, 255, 136, 0.2); }
+.card-plan { border-color: var(--neon-purple); box-shadow: 0 0 15px rgba(189, 0, 255, 0.2); }
+.card-progress { border-color: var(--neon-gold); box-shadow: 0 0 15px rgba(255, 234, 0, 0.2); }
+
+/* 4. Chat Area */
+.chat-container {
+    padding: 20px;
+    margin-top: auto;
+}
+
+input {
+    width: 100%;
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+    padding: 15px;
+    border-radius: 25px;
+}
