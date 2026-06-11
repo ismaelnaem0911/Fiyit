@@ -6,16 +6,23 @@ let currentQ = 0;
 let score = 0;
 
 function renderQuiz() {
-    // For demo, we'll pull from our NationalCurriculum data
+    const activeUnit = localStorage.getItem('activeUnit');
+    
+    if (!activeUnit) {
+        appRoot.innerHTML = `<h2>Please select a unit from Books first!</h2><button onclick="setView('books')">Go to Books</button>`;
+        return;
+    }
+
+    // Mock questions based on the selected unit
     const questions = [
-        { q: "What is the capital of Ethiopia?", a: ["Addis Ababa", "Nairobi", "Cairo"], correct: 0 },
-        { q: "Which is a core subject in Grade 11?", a: ["Mathematics", "History", "Physics"], correct: 0 }
+        { q: `Question 1 about ${activeUnit}?`, a: ["Correct", "Wrong", "Wrong"], correct: 0 },
+        { q: `Question 2 about ${activeUnit}?`, a: ["Wrong", "Correct", "Wrong"], correct: 1 }
     ];
 
     const q = questions[currentQ];
     
     appRoot.innerHTML = `
-        <div class="quiz-header">Question ${currentQ + 1} / ${questions.length}</div>
+        <div class="quiz-header">Quiz: ${activeUnit}</div>
         <div class="question-box">${q.q}</div>
         <div class="options-grid">
             ${q.a.map((opt, i) => `
@@ -27,25 +34,22 @@ function renderQuiz() {
 
 function checkAnswer(selected, correct) {
     const buttons = document.querySelectorAll('.opt-btn');
-    
-    // Disable all buttons so user can't spam
     buttons.forEach(b => b.disabled = true);
     
     if (selected === correct) {
-        buttons[selected].style.background = "#4CAF50"; // Green for success
+        buttons[selected].style.background = "#4CAF50";
         score++;
     } else {
-        buttons[selected].style.background = "#F44336"; // Red for fail
-        buttons[correct].style.background = "#4CAF50";  // Highlight correct
+        buttons[selected].style.background = "#F44336";
+        buttons[correct].style.background = "#4CAF50";
     }
 
-    // Auto-transition after 1 second
     setTimeout(() => {
         currentQ++;
         if (currentQ < 2) {
             renderQuiz();
         } else {
-            appRoot.innerHTML = `<h2>Quiz Finished! Score: ${score}</h2><button onclick="renderHome()">Go Home</button>`;
+            appRoot.innerHTML = `<h2>Finished! Score: ${score}</h2><button onclick="renderHome()">Home</button>`;
         }
-    }, 1000);
+    }, 1500);
 }
