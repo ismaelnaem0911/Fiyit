@@ -3,58 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIYIT 2.0 | National Curriculum</title>
-    <!-- CSS must load first -->
+    <title>FIYIT</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <!-- UI Backgrounds -->
-    <div class="gemini-bg-fluid"></div>
-    <div class="gemini-aurora-top"></div>
-
-    <!-- Top Navigation -->
     <header class="top-bar">
-        <button class="top-icon-btn" onclick="setView('home')">🏠</button>
-        <div class="logo-area">
-            <div id="fluid-logo" class="logo-fiyit">FIYIT</div>
-        </div>
-        <button class="top-icon-btn">👤</button>
+        <button class="nav-btn" onclick="setView('home')">🏠</button>
+        <div class="logo">FIYIT</div>
+        <button class="nav-btn">👤</button>
     </header>
 
-    <!-- Main Dynamic Content Area -->
     <main id="app-root"></main>
 
-    <!-- AI Chat Panel -->
-    <section class="ai-chat-panel">
-        <div id="chat-stream" class="chat-stream-area">
-            <div class="chat-bubble ai-msg">Ready to learn? Select a grade!</div>
+    <section class="chat-panel">
+        <div id="chat-stream" class="chat-stream">
+            <div class="msg ai">Ready to learn? Select a grade!</div>
         </div>
-        <div class="chat-input-wrapper">
-            <button class="input-action-btn" id="mic-trigger">🎤</button>
-            <input type="text" id="user-chat-input" class="chat-input-field" placeholder="Ask AI..." autocomplete="off">
-            <button class="send-message-btn" id="send-trigger">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/></svg>
-            </button>
+        <div class="input-container">
+            <button class="action-btn" onclick="alert('Media sharing coming soon')">+</button>
+            <input type="text" id="user-chat-input" placeholder="Ask AI...">
+            <button class="action-btn" id="send-trigger">➤</button>
         </div>
     </section>
 
-    <!-- Bottom Wave -->
-    <footer class="bottom-wave-container">
-        <div class="wave layer-magenta"></div>
-        <div class="wave layer-cyan"></div>
-        <div class="wave layer-gold"></div>
-    </footer>
-
-    <!-- LOGIC LOAD ORDER (DO NOT CHANGE) -->
-    <!-- 1. The Database -->
     <script src="js/data.js"></script>
-    <!-- 2. The Controller -->
     <script src="js/app.js"></script>
-    <!-- 3. The Feature Modules -->
     <script src="js/books.js"></script>
-    <script src="js/modules.js"></script>
     <script src="js/quiz.js"></script>
-
 </body>
 </html>
