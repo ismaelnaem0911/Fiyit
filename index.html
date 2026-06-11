@@ -2,49 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIYIT | Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fiyit</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="aurora-top"></div>
 
-    <header class="top-bar">
-        <button class="nav-btn" onclick="alert('Settings Panel Opened')">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+    <div class="gemini-aurora-top"></div>
+
+    <header class="app-header">
+        <button class="header-icon-btn" id="settings-toggle-btn" onclick="openSettingsModal()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </button>
-        <h1 class="logo-fiyit">Fiyit</h1>
-        <button class="nav-btn profile-btn" onclick="alert('Profile Opened')">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"/></svg>
-            <span class="status-dot"></span>
+        <span class="app-title-logo">Fiyit</span>
+        <button class="header-icon-btn profile-wrapper" onclick="openProfileTab()">
+            <div class="avatar-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <span class="active-status-indicator"></span>
         </button>
     </header>
 
-    <main id="app-root"></main>
-
-    <div class="bottom-waves"></div>
-
-    <section class="chat-panel">
-        <div id="chat-stream" class="chat-stream">
-            <div class="msg ai">Hello, how can I help you study?</div>
+    <div id="settings-overlay-modal" class="settings-modal-view">
+        <div class="settings-modal-container">
+            <div class="settings-modal-header">
+                <h2>Settings Panel</h2>
+                <button class="close-modal-btn" onclick="closeSettingsModal()">&times;</button>
+            </div>
+            <div class="settings-options-list">
+                <div class="settings-item" onclick="handleSettingsOption('History')">
+                    <span>Chat History</span>
+                </div>
+                <div class="settings-item" onclick="handleSettingsOption('Profile')">
+                    <span>Profile Management</span>
+                </div>
+                <div class="settings-item" onclick="handleSettingsOption('Premium')">
+                    <span class="premium-text">Premium Features</span>
+                </div>
+                <div class="settings-item" onclick="handleSettingsOption('Feedback')">
+                    <span>Send Feedback</span>
+                </div>
+                <div class="settings-item" onclick="handleSettingsOption('About')">
+                    <span>About FIYIT App</span>
+                </div>
+            </div>
         </div>
-        <div class="input-container">
-            <button class="icon-action-btn" onclick="alert('Voice Input Coming Soon')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+    </div>
+
+    <main id="app-dynamic-view-root"></main>
+
+    <section class="bottom-chat-interface">
+        
+        <div class="message-pill-bar">
+            <button class="pill-action-trigger" id="voice-input-btn" onclick="handleMicTrigger()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
             </button>
-            <input type="text" id="user-chat-input" placeholder="Type message...">
-            <button class="icon-action-btn" onclick="alert('Share Menu Opened')">
-                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            <input type="text" id="chat-text-input-field" placeholder="Type message..." autocomplete="off">
+            <button class="pill-action-trigger" id="plus-menu-btn" onclick="handlePlusTrigger()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             </button>
-            <button class="send-trigger" id="send-trigger">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+            <button class="pill-submit-trigger" id="chat-submit-trigger-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
             </button>
         </div>
+
+        <div id="chat-conversation-stream" class="chat-conversation-stream">
+            <div class="chat-bubble-row ai-bubble-row">
+                <div class="chat-bubble ai-bubble">Ready to learn? Select a grade!</div>
+            </div>
+        </div>
+
     </section>
+
+    <div class="gemini-wavy-footer"></div>
 
     <script src="js/data.js"></script>
     <script src="js/app.js"></script>
     <script src="js/books.js"></script>
-    <script src="js/quiz.js"></script>
 </body>
 </html>
