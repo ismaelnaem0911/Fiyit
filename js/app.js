@@ -1,13 +1,46 @@
 // ==========================================
-// FIYIT 2.0 - MASTER CONTROLLER (GEMINI UI)
+// FIYIT 2.0 - MASTER CONTROLLER (WITH LOGIN)
 // ==========================================
 
 const appRoot = document.getElementById('app-root');
 
-// Main Router: Switches the top half of the screen seamlessly
+// 1. AUTHENTICATION LOGIC
+window.onload = () => {
+    const user = localStorage.getItem('fiyit_user');
+    if (!user) {
+        renderLogin();
+    } else {
+        renderHome();
+    }
+};
+
+function renderLogin() {
+    appRoot.innerHTML = `
+        <div class="login-overlay">
+            <div class="card" style="margin: 20% auto; padding: 20px; max-width: 300px; background: white; color: black;">
+                <h2>Login to FIYIT</h2>
+                <input type="text" id="login-user" placeholder="Username" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+                <input type="password" id="login-pass" placeholder="Password" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+                <button onclick="handleLogin()" style="width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px;">Sign In</button>
+            </div>
+        </div>
+    `;
+}
+
+function handleLogin() {
+    const user = document.getElementById('login-user').value;
+    const pass = document.getElementById('login-pass').value;
+    if (user && pass) {
+        localStorage.setItem('fiyit_user', user);
+        renderHome();
+    } else {
+        alert("Please enter a username and password.");
+    }
+}
+
+// 2. ROUTING LOGIC
 function setView(viewName) {
     appRoot.innerHTML = '';
-    
     switch(viewName) {
         case 'home': renderHome(); break;
         case 'books': renderBooksHome(); break;
@@ -20,49 +53,12 @@ function setView(viewName) {
 
 function renderHome() {
     appRoot.innerHTML = `
-        <div class="welcome-text">Welcome, User! 👋</div>
+        <div class="welcome-text">Welcome, ${localStorage.getItem('fiyit_user')}! 👋</div>
         <div class="nav-grid">
-            <div class="card card-books" onclick="setView('books')">
-                <div class="card-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg></div>
-                <span>Books</span>
-            </div>
-            <div class="card card-quiz" onclick="setView('quiz')">
-                <div class="card-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
-                <span>Quiz</span>
-            </div>
-            <div class="card card-progress" onclick="setView('progress')">
-                <div class="card-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg></div>
-                <span>Progress</span>
-            </div>
-            <div class="card card-plan" onclick="setView('plan')">
-                <div class="card-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg></div>
-                <span>Plan</span>
-            </div>
+            <div class="card" onclick="setView('books')">Books</div>
+            <div class="card" onclick="setView('quiz')">Quiz</div>
+            <div class="card" onclick="setView('progress')">Progress</div>
+            <div class="card" onclick="setView('plan')">Plan</div>
         </div>
     `;
 }
-
-window.onload = () => {
-    renderHome();
-    
-    const sendBtn = document.getElementById('send-trigger');
-    const chatInput = document.getElementById('user-chat-input');
-    const chatStream = document.getElementById('chat-stream');
-
-    if (sendBtn && chatInput && chatStream) {
-        const sendMessage = () => {
-            const text = chatInput.value.trim();
-            if (text) {
-                const userMsg = document.createElement('div');
-                userMsg.className = 'chat-bubble';
-                userMsg.style.alignSelf = 'flex-start';
-                userMsg.textContent = text;
-                chatStream.appendChild(userMsg);
-                chatInput.value = '';
-                chatStream.scrollTop = chatStream.scrollHeight;
-            }
-        };
-        sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
-    }
-};
